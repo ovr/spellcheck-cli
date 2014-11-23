@@ -8,4 +8,5 @@ include_once __DIR__ . '/../vendor/autoload.php';
 use \Ovr\SpellChecker\Application;
 
 $console = new Application();
+$console->add(new \Ovr\SpellChecker\Command\CheckCommand());
 $console->run();
