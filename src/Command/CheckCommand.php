@@ -6,6 +6,7 @@
 namespace Ovr\SpellChecker\Command;
 
 
+use Exception;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,7 +30,16 @@ class CheckCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        var_dump($input->getArguments());
-        var_dump($input->getOptions());
+        $path = $input->getArgument('path');
+
+        if (is_file($path)) {
+            if (!is_readable($path)) {
+                throw new Exception('File is not readable.');
+            }
+
+            $content = file_get_contents($path);
+        } else {
+            throw new Exception('$path argument must be a file path (dir is not supported).');
+        }
     }
 }
