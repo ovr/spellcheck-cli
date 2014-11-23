@@ -1,0 +1,13 @@
+language:
+  - php
+
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+
+install:
+  - composer --prefer-source install
+
+script:
+  - php bin/spellchecker.php check simple-ru.txt;
