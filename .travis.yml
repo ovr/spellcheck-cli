@@ -10,4 +10,4 @@ install:
   - composer --prefer-source install
 
 script:
-  - php bin/spellchecker.php check simple-ru.txt;
+  - ./spellchecker check simple-ru.txt
