@@ -8,10 +8,19 @@ SpellChecker Util
 
 # Installation
 
-# How to run
-
-You can check specified file by using command:
+in project after composer init:
 
 ```bash
-php bin/spellchecker.php check simple-ru.txt
+composer require ovr/spellcheck-cli:*
 ```
+
+global env:
+
+```bash
+composer global require ovr/spellcheck-cli:*
+sudo ln -s ~/.composer/vendor/bin/spellchecker /usr/bin/spellchecker
+```
+
+# How to run
+
+You can check specified file by usin
