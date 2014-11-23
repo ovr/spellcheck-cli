@@ -5,3 +5,13 @@ SpellChecker Util
 [![License](https://poser.pugx.org/ovr/spellcheck-cli/license.svg)](https://packagist.org/packages/ovr/spellcheck-cli)
 
 > Spell checker for your text in console.
+
+# Installation
+
+# How to run
+
+You can check specified file by using command:
+
+```
+php bin/spellchecker.php check simple-ru.txt
+```
