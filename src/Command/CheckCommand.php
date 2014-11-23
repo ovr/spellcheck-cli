@@ -38,6 +38,22 @@ class CheckCommand extends Command
             }
 
             $content = file_get_contents($path);
+
+            /**
+             * @todo Will rewrite to provider with social connect lib soon
+             */
+            $curl = curl_init();
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($curl, CURLOPT_HEADER, 0);
+
+            curl_setopt($curl, CURLOPT_URL, 'http://speller.yandex.net/services/spellservice.json/checkText');
+            curl_setopt($curl, CURLOPT_POSTFIELDS, 'language='.$input->getOption('language').'&text='.$content);
+
+            $out = curl_exec($curl);
+            echo $out;
+            curl_close($curl);
         } else {
             throw new Exception('$path argument must be a file path (dir is not supported).');
         }
