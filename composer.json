@@ -1,0 +1,12 @@
+{
+    "name": "ovr/spellcheck-cli",
+    "description": "Check your text",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Patsura Dmitry",
+            "email": "talk@dmtry.me"
+        }
+    ],
+    "require": {}
+}
