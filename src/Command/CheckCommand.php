@@ -19,24 +19,17 @@ class CheckCommand extends Command
         $this
             ->setName('check')
             ->setDescription('Spell check your text')
-            ->addArgument(
-                'language',
-                InputArgument::OPTIONAL,
-                'Who do you want to greet?',
-                'ru'
-            )
-            ->addArgument(
-                'file',
-                null,
-                InputOption::VALUE_REQUIRED,
-                'If set, the task will yell in uppercase letters'
-            )
+            ->setDefinition(array(
+                new InputOption('language', null, InputOption::VALUE_OPTIONAL, 'Text language', 'ru'),
+                new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', false),
+                new InputArgument('path', InputArgument::REQUIRED),
+            ))
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $language = $input->getArgument('language');
-        var_dump($language);
+        var_dump($input->getArguments());
+        var_dump($input->getOptions());
     }
 }
