@@ -21,7 +21,7 @@ class CheckCommand extends Command
             ->setName('check')
             ->setDescription('Spell check your text')
             ->setDefinition(array(
-                new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru'),
+                new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru,en'),
                 new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', false),
                 new InputArgument('path', InputArgument::REQUIRED),
             ))
