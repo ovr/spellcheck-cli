@@ -5,6 +5,7 @@
 
 namespace Ovr\SpellChecker;
 
-class Application {
+class Application extends \Symfony\Component\Console\Application
+{
 
-} 
+}
