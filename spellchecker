@@ -1,9 +1,15 @@
+#!/usr/bin/env php
 <?php
+
+if (!ini_get('date.timezone')) {
+     ini_set('date.timezone', 'UTC');
+}
+
 /**
  * @author Patsura Dmitry http://github.com/ovr <talk@dmtry.me>
  */
 
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/vendor/autoload.php';
 
 use \Ovr\SpellChecker\Application;
 
