@@ -9,4 +9,5 @@ use \Ovr\SpellChecker\Application;
 
 $console = new Application();
 $console->add(new \Ovr\SpellChecker\Command\CheckCommand());
+$console->setDefaultCommand('check');
 $console->run();
