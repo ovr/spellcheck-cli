@@ -51,8 +51,28 @@ class CheckCommand extends Command
             curl_setopt($curl, CURLOPT_URL, 'http://speller.yandex.net/services/spellservice.json/checkText');
             curl_setopt($curl, CURLOPT_POSTFIELDS, 'language='.$input->getOption('language').'&text='.$content);
 
-            $out = curl_exec($curl);
-            echo $out;
+            $response = curl_exec($curl);
+            if ($response) {
+                $result = json_decode($response);
+
+                if (count($result) > 0) {
+                    /** @var \Symfony\Component\Console\Helper\Table $table */
+                    $table = $this->getHelper('table');
+                    $table->setHeaders(array('Word', 'Need to be', 'Type', 'Line'));
+
+                    foreach ($result as $mistake) {
+                        $table->addRow(array(
+                            $mistake->word,
+                            $mistake->s ? (is_array($mistake->s) ? implode(',', $mistake->s) : $mistake->s) : '*',
+                            $mistake->type,
+                            $mistake->row
+                        ));
+                    }
+
+                    $table->render($output);
+                }
+            }
+
             curl_close($curl);
         } else {
             throw new Exception('$path argument must be a file path (dir is not supported).');
