@@ -64,7 +64,7 @@ class CheckCommand extends Command
                         $table->addRow(array(
                             $mistake->word,
                             isset($mistake->s) ? (is_array($mistake->s) ? implode(',', $mistake->s) : $mistake->s) : '*',
-                            isset($mistake->type) ? $mistake->type : '*',
+                            isset($mistake->code) ? $mistake->code : '*',
                             $mistake->row
                         ));
                     }
