@@ -12,6 +12,6 @@ SpellChecker Util
 
 You can check specified file by using command:
 
-```
+```bash
 php bin/spellchecker.php check simple-ru.txt
 ```
