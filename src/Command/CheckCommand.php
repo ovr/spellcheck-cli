@@ -63,8 +63,8 @@ class CheckCommand extends Command
                     foreach ($result as $mistake) {
                         $table->addRow(array(
                             $mistake->word,
-                            $mistake->s ? (is_array($mistake->s) ? implode(',', $mistake->s) : $mistake->s) : '*',
-                            $mistake->type,
+                            isset($mistake->s) ? (is_array($mistake->s) ? implode(',', $mistake->s) : $mistake->s) : '*',
+                            isset($mistake->type) ? $mistake->type : '*',
                             $mistake->row
                         ));
                     }
