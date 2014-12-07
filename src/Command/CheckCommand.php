@@ -90,7 +90,7 @@ class CheckCommand extends Command
             /** @var \SplFileInfo $fileinfo */
             foreach ($it as $fileinfo) {
                 if ($fileinfo->isFile()) {
-                    $this->checkFile($fileinfo->getPath(), $input, $output);
+                    $this->checkFile($fileinfo->getPathname(), $input, $output);
                 }
             }
         }
