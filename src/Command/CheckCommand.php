@@ -109,6 +109,7 @@ class CheckCommand extends Command
                         continue;
                     }
 
+                    $output->writeln('File: ' . $fileinfo->getPathname());
                     $hasMistakes = $this->checkFile($fileinfo->getPathname(), $input, $output);
                 }
             }
