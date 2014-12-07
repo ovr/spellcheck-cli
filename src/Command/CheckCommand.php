@@ -53,13 +53,15 @@ class CheckCommand extends Command
             $result = json_decode($response);
 
             if (count($result) > 0) {
-                $hasMistakes = true;
-
                 /** @var \Symfony\Component\Console\Helper\Table $table */
                 $table = $this->getHelper('table');
                 $table->setHeaders(array('Word', 'Need to be', 'Type', 'Line'));
 
                 foreach ($result as $mistake) {
+                    if ($mistake->code > 1) {
+                        $hasMistakes = true;
+                    }
+
                     $table->addRow(array(
                         $mistake->word,
                         isset($mistake->s) ? (is_array($mistake->s) ? implode(',', $mistake->s) : $mistake->s) : '*',
@@ -113,7 +115,7 @@ class CheckCommand extends Command
         }
 
         if ($hasMistakes) {
-            exit($input->getOption('exit-code-with-miss-takes'));
+            exit(intval($input->getOption('exit-code-with-miss-takes')));
         }
     }
 }
