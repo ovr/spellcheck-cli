@@ -24,6 +24,7 @@ class CheckCommand extends Command
             ->setDefinition(array(
                 new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru,en'),
                 new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', []),
+                new InputOption('exit-code-with-miss-takes', null, InputOption::VALUE_OPTIONAL, 'Programm exit code when it has misstakes in text', 0),
                 new InputArgument('path', InputArgument::REQUIRED),
             ))
         ;
@@ -45,11 +46,15 @@ class CheckCommand extends Command
         curl_setopt($curl, CURLOPT_URL, 'http://speller.yandex.net/services/spellservice.json/checkText');
         curl_setopt($curl, CURLOPT_POSTFIELDS, 'language='.$input->getOption('language').'&text='.$content);
 
+        $hasMistakes = false;
+
         $response = curl_exec($curl);
         if ($response) {
             $result = json_decode($response);
 
             if (count($result) > 0) {
+                $hasMistakes = true;
+
                 /** @var \Symfony\Component\Console\Helper\Table $table */
                 $table = $this->getHelper('table');
                 $table->setHeaders(array('Word', 'Need to be', 'Type', 'Line'));
@@ -68,18 +73,21 @@ class CheckCommand extends Command
         }
 
         curl_close($curl);
+
+        return $hasMistakes;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $input->getArgument('path');
+        $hasMistakes = false;
 
         if (is_file($path)) {
             if (!is_readable($path)) {
                 throw new Exception('File is not readable.');
             }
 
-            $this->checkFile($path, $input, $output);
+            $hasMistakes = $this->checkFile($path, $input, $output);
         } else {
             if (!is_dir($path)) {
                 throw new Exception('$path argument is not a path.');
@@ -99,9 +107,13 @@ class CheckCommand extends Command
                         continue;
                     }
 
-                    $this->checkFile($fileinfo->getPathname(), $input, $output);
+                    $hasMistakes = $this->checkFile($fileinfo->getPathname(), $input, $output);
                 }
             }
+        }
+
+        if ($hasMistakes) {
+            exit($input->getOption('exit-code-with-miss-takes'));
         }
     }
 }
