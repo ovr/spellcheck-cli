@@ -23,7 +23,7 @@ class CheckCommand extends Command
             ->setDescription('Spell check your text')
             ->setDefinition(array(
                 new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru,en'),
-                new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', false),
+                new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', []),
                 new InputArgument('path', InputArgument::REQUIRED),
             ))
         ;
@@ -87,9 +87,18 @@ class CheckCommand extends Command
 
             $it = new RecursiveDirectoryIterator($path);
 
+            $ext = $input->getOption('ext');
+            if (is_string($ext)) {
+                $ext = explode(',', $ext);
+            }
+
             /** @var \SplFileInfo $fileinfo */
             foreach ($it as $fileinfo) {
                 if ($fileinfo->isFile()) {
+                    if (count($ext) > 0 && !in_array($fileinfo->getExtension(), $ext)) {
+                        continue;
+                    }
+
                     $this->checkFile($fileinfo->getPathname(), $input, $output);
                 }
             }
