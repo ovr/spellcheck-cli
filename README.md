@@ -23,4 +23,8 @@ sudo ln -s ~/.composer/vendor/bin/spellchecker /usr/bin/spellchecker
 
 # How to run
 
-You can check specified file by usin
+You can check specified file by using command
+
+```bash
+./spellchecker check file
+```
