@@ -25,6 +25,7 @@ class CheckCommand extends Command
                 new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru,en'),
                 new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', []),
                 new InputOption('exit-code-with-miss-takes', null, InputOption::VALUE_OPTIONAL, 'Programm exit code when it has misstakes in text', 0),
+                new InputOption('show-unknown', null, InputOption::VALUE_OPTIONAL, 'Do we need to show unknown world?', false),
                 new InputArgument('path', InputArgument::REQUIRED),
             ))
         ;
@@ -46,6 +47,7 @@ class CheckCommand extends Command
         curl_setopt($curl, CURLOPT_URL, 'http://speller.yandex.net/services/spellservice.json/checkText');
         curl_setopt($curl, CURLOPT_POSTFIELDS, 'language='.$input->getOption('language').'&text='.$content);
 
+        $showUnknown = boolval($input->getOption('show-unknown'));
         $hasMistakes = false;
 
         $response = curl_exec($curl);
@@ -60,6 +62,10 @@ class CheckCommand extends Command
                 foreach ($result as $mistake) {
                     if ($mistake->code > 1) {
                         $hasMistakes = true;
+                    }
+
+                    if ($mistake->code == 1 && !$showUnknown) {
+                        continue;
                     }
 
                     $table->addRow(array(
