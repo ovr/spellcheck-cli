@@ -71,6 +71,11 @@ class CheckCommand extends Command
                 }
 
                 $table->render($output);
+
+                /**
+                 * Cleanup table manually
+                 */
+                $table->setRows([]);
             }
         }
 
