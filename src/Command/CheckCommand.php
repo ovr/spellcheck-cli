@@ -25,7 +25,7 @@ class CheckCommand extends Command
                 new InputOption('language', 'lang', InputOption::VALUE_OPTIONAL, 'Text language', 'ru,en'),
                 new InputOption('ext', null, InputOption::VALUE_OPTIONAL, 'what ext wee need', []),
                 new InputOption('exit-code-with-miss-takes', null, InputOption::VALUE_OPTIONAL, 'Programm exit code when it has misstakes in text', 0),
-                new InputOption('show-unknown', null, InputOption::VALUE_OPTIONAL, 'Do we need to show unknown world?', false),
+                new InputOption('show-unknown', null, InputOption::VALUE_OPTIONAL, 'Do we need to show unknown world?', true),
                 new InputArgument('path', InputArgument::REQUIRED),
             ))
         ;
